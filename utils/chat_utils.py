@@ -2,7 +2,7 @@
 import streamlit as st
 from transformers import pipeline
 
-HF_TOKEN = st.secrets["HF_TOKEN"]
+HF_TOKEN = st.secrets.get("HF_TOKEN")
 
 model_cache = {}
 
