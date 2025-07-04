@@ -2,18 +2,21 @@
 import os
 from transformers import pipeline
 
-# Load models
 HF_TOKEN = os.getenv("HF_TOKEN")
 
+model_cache = {}
+
 def load_model(model_name):
-    return pipeline("text-generation", model=model_name, token=HF_TOKEN)
+    if model_name not in model_cache:
+        model_cache[model_name] = pipeline(
+            "text-generation",
+            model=model_name,
+            token=HF_TOKEN,
+            trust_remote_code=True
+        )
+    return model_cache[model_name]
 
-llama4_model = load_model("llama4-scout")  # Replace with real model path
-maverick_model = load_model("llama4-maverick")  # Replace with real model path
-gemma_model = load_model("amiguel/gemma-3")
-
-def handle_user_query(prompt: str):
-    # Simple router (you can enhance this with UI selector later)
-    model = gemma_model  # Default to gemma
-    response = model(prompt, max_new_tokens=256, do_sample=True)[0]['generated_text']
-    return response.split(prompt)[-1].strip()
+def handle_user_query(prompt: str, model_name: str):
+    model = load_model(model_name)
+    output = model(prompt, max_new_tokens=256, do_sample=True)[0]['generated_text']
+    return output.split(prompt)[-1].strip()
