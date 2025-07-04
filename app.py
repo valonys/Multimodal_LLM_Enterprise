@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from utils.chat_utils import handle_user_query
 from utils.file_utils import handle_file_upload
 from utils.ui_components import render_chat_interface
+from streamlit.components.v1 import html
 
 # Load secrets and config
 load_dotenv()
@@ -56,3 +57,38 @@ if user_input:
         response = handle_user_query(user_input, model_name=st.session_state.selected_model)
         st.session_state.chat_history.append(("user", user_input))
         st.session_state.chat_history.append(("assistant", response))
+
+# --- Microphone Voice Capture (JS) ---
+st.markdown("---")
+st.subheader("🎤 Voice Input (Experimental)")
+html("""
+<script>
+  const button = document.createElement('button');
+  button.textContent = '🎙️ Start Recording';
+  button.style.fontSize = '1rem';
+  document.body.appendChild(button);
+
+  let recognition;
+  if ('webkitSpeechRecognition' in window) {
+    recognition = new webkitSpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    button.onclick = () => {
+      recognition.start();
+    };
+
+    recognition.onresult = function(event) {
+      const transcript = event.results[0][0].transcript;
+      const streamlitInput = window.parent.document.querySelector('[data-testid="stChatInput"] textarea');
+      if (streamlitInput) {
+        streamlitInput.value = transcript;
+        streamlitInput.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    };
+  } else {
+    button.textContent = 'Speech Recognition not supported';
+  }
+</script>
+""", height=100)
