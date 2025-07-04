@@ -5,9 +5,9 @@ from streamlit.components.v1 import html
 USER_AVATAR = "https://cdn-icons-png.flaticon.com/512/456/456212.png"
 BOT_AVATAR = "https://cdn-icons-png.flaticon.com/512/4712/4712107.png"
 
-SEND_ICON = "\ud83d\udce4"
-MIC_ICON = "\ud83c\udfa4"
-PLUS_ICON = "\u2795"
+SEND_ICON = "📤"
+MIC_ICON = "🎤"
+PLUS_ICON = "➕"
 
 def render_chat_interface():
     for role, message in st.session_state.chat_history:
@@ -16,17 +16,17 @@ def render_chat_interface():
 
     st.markdown("""
     <style>
-    .chat-icons {
-        font-size: 1.4rem;
-        display: flex;
-        justify-content: end;
-        gap: 1rem;
-        margin-top: 0.5rem;
-    }
+        .chat-icons {
+            font-size: 1.4rem;
+            display: flex;
+            justify-content: end;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
     </style>
     <div class='chat-icons'>
-        <span>{}</span>
-        <span>{}</span>
-        <span>{}</span>
+        <span title="Upload">➕</span>
+        <span title="Mic">🎤</span>
+        <span title="Send">📤</span>
     </div>
-    """.format(PLUS_ICON, MIC_ICON, SEND_ICON), unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
