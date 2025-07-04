@@ -9,9 +9,14 @@ MIC_ICON = "🎤"
 PLUS_ICON = "➕"
 
 def render_chat_interface():
-    for role, message in st.session_state.chat_history:
-        with st.chat_message(role, avatar=USER_AVATAR if role == "user" else BOT_AVATAR):
-            st.markdown(message)
+    chat_history = st.session_state.get("chat_history", [])
+    if not isinstance(chat_history, list):
+        chat_history = []
+
+    for role, message in chat_history:
+        if role in ["user", "assistant"]:
+            with st.chat_message(role, avatar=USER_AVATAR if role == "user" else BOT_AVATAR):
+                st.markdown(str(message))
 
     st.markdown(f"""
     <style>
