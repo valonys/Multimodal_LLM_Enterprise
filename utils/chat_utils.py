@@ -1,8 +1,8 @@
 # utils/chat_utils.py
-import os
+import streamlit as st
 from transformers import pipeline
 
-HF_TOKEN = os.getenv("HF_TOKEN")
+HF_TOKEN = st.secrets["HF_TOKEN"]
 
 model_cache = {}
 
