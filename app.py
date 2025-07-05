@@ -35,6 +35,7 @@ with st.sidebar:
         "Choose a model:",
         [
             "amiguel/gemma-3",
+            "amiguel/GM_Qwen1.8B_Finetune",
             "meta-llama/Llama-4-Scout-17B-16E-Instruct",
             "meta-llama/Llama-4-Maverick-17B-128E-Instruct"
         ],
