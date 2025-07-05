@@ -33,8 +33,12 @@ with st.sidebar:
     st.subheader("🚀 Select Model")
     st.session_state.selected_model = st.selectbox(
         "Choose a model:",
-        ["amiguel/gemma-3", "llama4-scout", "llama4-maverick"],
-        index=["amiguel/gemma-3", "llama4-scout", "llama4-maverick"].index(st.session_state.selected_model)
+        [
+            "amiguel/gemma-3",
+            "meta-llama/Llama-4-Scout-17B-16E-Instruct",
+            "meta-llama/Llama-4-Maverick-17B-128E-Instruct"
+        ],
+        index=0
     )
 
 # --- Main Chat Interface ---
